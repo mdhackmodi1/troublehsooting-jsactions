@@ -15,7 +15,7 @@ jobs:
 
       - name: Print Tag
         run: | 
-            echo $GITHUB_REF_NAME
+            echo "TAG_NAME=$GITHUB_REF_NAME" >> $GITHUB_ENV
             echo ${{ github.event.head_commit.message }}
     
       - uses: actions/checkout@v4
@@ -30,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: $GITHUB_REF_NAME
-          release_name: Release for tag $GITHUB_REF_NAME
+          tag_name: $TAG_NAME
+          release_name: Release for tag $TAG_NAME
           body: |
             Changes in this Release
             - ${{ github.event.head_commit.message }}
