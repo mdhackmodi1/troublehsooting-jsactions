@@ -12,25 +12,36 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT" 
+
       - name: Get tag name
         run: |
           # Example using Bash substring extraction
-          TAG_NAME=${GITHUB_REF#refs/tags/}
-          echo "The tag name is: $TAG_NAME"
-    #   - uses: actions/checkout@v4
+          echo TAG_NAME=${GITHUB_REF#refs/tags/} >> $GITHUB_ENV
+          echo $TAG
+    
+      - uses: actions/checkout@v4
 
-    #   - name: Create Release
-    #     id: create_release
-    #     uses: actions/create-release@v1
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-    #     with:
-    #       tag_name: ${{ inputs.tag_name }}
-    #       release_name: Release for tag - ${{ inputs.tag_name }} and ${{ github.ref }}
-    #       body: |
-    #         Changes in this Release
-    #         - First Change
-    #         - Second Change
+      - name: Artifact to be Upload
+        run: |
+            ls -ltr dist/
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: $TAG_NAME
+          release_name: Release for tag - $TAG_NAME and ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
 
     #   - name: Upload Release Asset
     #     id: upload-release-asset 
