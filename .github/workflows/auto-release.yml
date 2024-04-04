@@ -13,16 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT" 
-
-      - name: Get tag name
-        run: |
-          # Example using Bash substring extraction
-          echo TAG_NAME=${GITHUB_REF#refs/tags/} >> $GITHUB_ENV
-          echo $TAG
+      - name: Print Tag
+        run: | 
+            echo ${{ github.ref }}
+            echo ${{ github.event.head_commit.message }}
     
       - uses: actions/checkout@v4
 
@@ -37,11 +31,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: $TAG_NAME
-          release_name: Release for tag - $TAG_NAME and ${{ github.ref }}
+          release_name: Release for tag ${{ github.ref }}
           body: |
             Changes in this Release
-            - First Change
-            - Second Change
+            - ${{ github.event.head_commit.message }}
 
     #   - name: Upload Release Asset
     #     id: upload-release-asset 
