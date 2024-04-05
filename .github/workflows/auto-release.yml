@@ -17,6 +17,7 @@ jobs:
         run: | 
             echo "TAG_NAME=$GITHUB_REF_NAME" >> $GITHUB_ENV
             echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+            echo Tag = $TAG_NAME 
     
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -47,4 +48,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./dist/index.js
           asset_name: built-index.js
-          asset_content_type: application/json
+          asset_content_type: text/javascript
