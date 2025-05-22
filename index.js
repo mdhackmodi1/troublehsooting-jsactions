@@ -28,7 +28,7 @@ core.setOutput('customized_greeting', greeting);
 // Simulate an error scenario
 if (secretPhoneInput.length !== 10) {
   core.error(`Error message - provided phone number is invalid  - ${secretPhoneInput}`);
-  core.setFailed('Invalid phone number provided!');
+  //core.setFailed('Invalid phone number provided!');
 } else {
   switch (inputCountry) {
     case 'india':
