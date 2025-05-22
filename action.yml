@@ -4,7 +4,7 @@ inputs:
   name:
     description: 'Provide User Name'
     required: true
-    default: 'Siddharth'
+    default: 'Mayank'
   phone:
     description: 'Provide User Phone Number'
     required: true
@@ -12,7 +12,7 @@ inputs:
   country:
     description: 'Provide User Country'
     required: true
-    default: 'india'
+    default: 'India'
 outputs:
   customized_greeting:
    description: 'Setting output, to be used in subsequent steps'
